@@ -82,4 +82,4 @@ if __name__ == '__main__':
     articles_info = parse_habr_raw_htmls(habr_raw_htmls)
     normalized_nouns_in_articles = normalize(articles_info)
     nouns_in_weeks = arrange_nouns_by_weeks(normalized_nouns_in_articles)
-    print_most_frequent_nouns(nouns_in_weeks, top_words=10)
+    print_most_frequent_nouns(nouns_in_weeks, top_words=3)

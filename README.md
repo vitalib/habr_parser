@@ -10,7 +10,7 @@ Script should be run by Python3.5 and higher.
 
 Dependencies should be installed as follows:
 ```bash
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 ### Exampale of running
