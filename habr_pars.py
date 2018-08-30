@@ -8,10 +8,7 @@ from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 
 
-PYMORPHY = pymorphy2.MorphAnalyzer()
-
-
-def get_date_object(date_string):
+def get_date_object(date_string, pymorphy):
     today = datetime.date(datetime.today())
     if 'сегодня' in date_string:
         return today
@@ -21,7 +18,7 @@ def get_date_object(date_string):
         date = date_string.split()[:3]
         if not date[2].isdigit():
             date[2] = str(today.year)
-            date[1] = PYMORPHY.parse(date[1])[0].normal_form
+            date[1] = pymorphy.parse(date[1])[0].normal_form
         return datetime.date(datetime.strptime(' '.join(date), '%d %B %Y'))
 
 
@@ -42,9 +39,10 @@ def parse_habr_raw_html(raw_html):
     soup = bs4.BeautifulSoup(raw_html, 'html.parser')
     articles = soup.find_all('article', {'class': 'post post_preview'})
     articles_info = []
+    pymorphy = pymorphy2.MorphAnalyzer()
     for article in articles:
         date = article.find("span", {"class": "post__time"}).text
-        date_object = get_date_object(date)
+        date_object = get_date_object(date, pymorphy)
         title = article.find('a', {"class": "post__title_link"}).text
         articles_info.append((date_object, title))
     return articles_info

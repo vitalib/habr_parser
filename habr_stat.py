@@ -30,11 +30,12 @@ def get_args():
 
 def get_first_and_last_week_dates(week, year=2018):
     first_day = date(year, 1, 1)
-    if first_day.weekday() > 3:
-        first_day += timedelta(7 - first_day.weekday())
+    wednesday, days_in_weak = 3, 7
+    if first_day.weekday() > wednesday:
+        first_day += timedelta(days_in_weak - first_day.weekday())
     else:
         first_day -= timedelta(first_day.weekday())
-    first_week_day = first_day + timedelta((week - 1) * 7)
+    first_week_day = first_day + timedelta((week - 1) * days_in_weak)
     last_week_day = first_week_day + timedelta(days=6)
     return first_week_day, last_week_day
 
